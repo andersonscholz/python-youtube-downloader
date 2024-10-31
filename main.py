@@ -1,4 +1,8 @@
+import os
 from pytubefix import YouTube
+
+def clear_terminal():
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 def main():
     print( "__   __          _         _           ______                    _                  _           ")
@@ -10,14 +14,17 @@ def main():
     link = input("Insira a URL: ")
     try:
         yt = YouTube(link)
+        video = yt.streams.get_highest_resolution()
+        video.download()
+        clear_terminal()
+
+        print("Vídeo baixado com sucesso!")
         print(
             f"\nTITULO DO VÍDEO SELECIONADO: \n {yt.title}\n\n"
             f"DATA DE PUBLICAÇÃO: \n {yt.publish_date}\n\n"
             f"VISUALIZAÇÕES: \n {yt.views}\n\n"
         )
-        video = yt.streams.get_highest_resolution()
-        video.download()
-        print("Vídeo baixado com sucesso!")
+        
     except Exception as e:
         print(f"Ocorreu um erro: {e}")
 
